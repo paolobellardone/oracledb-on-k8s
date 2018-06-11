@@ -1,0 +1,80 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "oracledb.fullname" . }}
+  namespace: default
+  labels:
+    app: {{ template "oracledb.name" . }}
+    chart: {{ template "oracledb.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "oracledb.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "oracledb.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.registrySecret }}
+      securityContext:
+        # Set fsGroup to oracle's user GID so that the PVC can be accessed inside the container
+        fsGroup: 54321
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+      - name: database-storage
+        persistentVolumeClaim:
+          claimName: {{ template "oracledb.fullname" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - /home/oracle/setup/dockerInit.sh
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            requests:
+              memory: {{ .Values.image.containerMemory }}
+          ports:
+            - name: sqlnet
+              containerPort: {{ .Values.image.containerPort }}
+              hostPort: {{ .Values.image.hostPort }}
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /ORCL #This is the directory inside the container
+              name: database-storage
+          env:
+            - name: DB_SID
+              value: {{ .Values.image.dbSid }}
+            - name: DB_PDB
+              value: {{ .Values.image.dbPdb }}
+            - name: DB_PASSWD
+              value: {{ .Values.image.dbPassword }}
+            - name: DB_DOMAIN
+              value: {{ .Values.image.dbDomain }}
+            - name: DB_MEMORY
+              value: {{ .Values.image.dbMemory }}
+            - name: DB_BUNDLE
+              value: basic
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

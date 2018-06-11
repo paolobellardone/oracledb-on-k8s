@@ -1,0 +1,69 @@
+# Default values for oracledb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Set this value to the registry secret used to login to docker or other private registries
+registrySecret: regsecret
+
+# Set this to the namespace where yoou want to deploy the Oracle Database
+namespace: default
+
+pvc:
+  #If not specified will default to oci
+  storageClassName: "oci"
+  #Check the availability domain on your OCI tenant
+  ociAD: "US-ASHBURN-AD-2"
+  accessModes: ReadWriteOnce
+  #Minimum size on OCI is 50Gi, if set smaller the deployment will fail
+  storageSize: 50Gi
+
+service:
+  #Type can be: ClusterIP, NodePort, LoadBalancer
+  type: LoadBalancer
+  port: 1521
+
+replicaCount: 1
+
+image:
+  repository: store/oracle/database-enterprise
+  tag: 12.2.0.1
+  pullPolicy: IfNotPresent
+  containerMemory: 3Gi
+  hostPort: 1521
+  containerPort: 1521
+  dbSid: ORCL
+  dbPdb: PDB1
+  dbPassword: Welcome1#
+  dbDomain: local
+  dbMemory: 2Gi
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
