@@ -27,8 +27,8 @@ The Oracle Database instance will be available after a little while because at f
 
 | Block   | Variable         | Default value                    | Notes |
 |---------|------------------|----------------------------------|-------|
-|         | registrySecret   | regsecret                        | See below on how to create it |
-|         | namespace        | default                          | See below on how to create a namespace |
+|         | registrySecret   | regsecret                        | See above on how to create it |
+|         | namespace        | default                          | See above on how to create a namespace |
 | pvc     |                  |                                  ||
 |         | ociAD            |                                  | Select an Availability Domain in your tenancy |
 |         | storageSize      | 50Gi                             | This is the minimum size on OCI |
