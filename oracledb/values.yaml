@@ -5,9 +5,6 @@
 # Set this value to the registry secret used to login to docker or other private registries
 registrySecret: regsecret
 
-# Set this to the namespace where yoou want to deploy the Oracle Database
-namespace: default
-
 pvc:
   #If not specified will default to oci
   storageClassName: "oci"
