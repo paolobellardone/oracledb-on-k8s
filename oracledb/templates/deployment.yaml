@@ -2,7 +2,6 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: {{ template "oracledb.fullname" . }}
-  namespace: default
   labels:
     app: {{ template "oracledb.name" . }}
     chart: {{ template "oracledb.chart" . }}

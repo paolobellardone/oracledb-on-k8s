@@ -9,18 +9,18 @@ Before running the chart, create a namespace and a registry secret to hold the d
 Please note that you need to accept the License Agreement with your accounte on Docker Store before being able to download the image.
 
 Create a namespace (if you don't want to use the *default* one)
-> kubectl create namespace [NAME]
+> kubectl create namespace [dbnamespace]
 
 Create a docker secret in the above namespace
-> kubectl create secret docker-registry regsecret --docker-username=[user] --docker-password=[password] --docker-email=[email]
+> kubectl create secret docker-registry regsecret --docker-username=[user] --docker-password=[password] --docker-email=[email] [--namespace dbnamespace]
 
 To install this helm chart, clone or download the repository
 > git clone https://github.com/paolobellardone/oracledb-on-k8s.git
 
 then customize the *values.yaml* to setup the required variables and run the following command
-> helm install --name [release name] oracledb
+> helm install --name [release name] oracledb [--namespace dbnamespace]
 
-The command will print out all the informations needed to access your new Oracle Database instance on K8S.  
+The command will print out all the information needed to access your new Oracle Database instance on K8S.  
 The Oracle Database instance will be available after a little while because at first run the database needs to be created and instantiated.
 
 ##### Values.yaml editable defaults, please change according to your needs
@@ -28,7 +28,6 @@ The Oracle Database instance will be available after a little while because at f
 | Block   | Variable         | Default value                    | Notes |
 |---------|------------------|----------------------------------|-------|
 |         | registrySecret   | regsecret                        | See above on how to create it |
-|         | namespace        | default                          | See above on how to create a namespace |
 | pvc     |                  |                                  ||
 |         | ociAD            |                                  | Select an Availability Domain in your tenancy |
 |         | storageSize      | 50Gi                             | This is the minimum size on OCI |
