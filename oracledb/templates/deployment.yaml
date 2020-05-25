@@ -50,12 +50,12 @@ spec:
               name: dshm
             - mountPath: /ORCL #This is the directory inside the container
               name: database-storage
-          #readinessProbe:
-          #  exec:
-          #    command:
-          #    - /bin/bash
-          #    - -c
-          #    - "/opt/oracle/checkDBStatus.sh"
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - "/home/oracle/setup/healthcheck.sh"
           env:
             - name: DB_SID
               value: {{ .Values.image.dbSid }}

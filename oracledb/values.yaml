@@ -33,7 +33,7 @@ image:
   containerPort: 1521
   dbSid: ORCL
   dbPdb: PDB1
-  dbPassword: Welcome1#
+  dbPassword: "Welcome1#"
   dbDomain: local
   dbMemory: 2Gi
 
