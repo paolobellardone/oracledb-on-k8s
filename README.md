@@ -20,7 +20,7 @@ To install this helm chart, clone or download the repository
 > git clone <https://github.com/paolobellardone/oracledb-on-k8s.git>
 
 then customize the *values.yaml* to setup the required variables and run the following command
-> helm install --name [release name] oracledb [--namespace dbnamespace]
+> helm install [release name] oracledb ./oracledb [--namespace dbnamespace]
 
 The command will print out all the information needed to access your new Oracle Database instance on K8S.
 The Oracle Database instance will be available after a little while because at first run the database needs to be created and instantiated.
