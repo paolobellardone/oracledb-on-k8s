@@ -1,11 +1,13 @@
 oracledb-on-k8s
 =================
-#### This helm chart helps you deploy an Oracle Database 12c Enterprise Edition, Single instance on Oracle Container Engine.
+
+#### This helm chart helps you deploy an Oracle Database 12c Enterprise Edition, Single instance on Oracle Container Engine
 
 The Oracle Database container is configured to use a Persistent Volume created via a Persistent Volume Claim using oci provider, this will allocate a block volume in Oracle Cloud Infrastructure tenancy.
 
 #### Pre-Requisites
-Before running the chart, create a namespace and a registry secret to hold the docker credentials needed to download the Oracle Database Docker image from Docker Store.  
+
+Before running the chart, create a namespace and a registry secret to hold the docker credentials needed to download the Oracle Database Docker image from Docker Store.
 Please note that you need to accept the License Agreement with your accounte on Docker Store before being able to download the image.
 
 Create a namespace (if you don't want to use the *default* one)
@@ -15,12 +17,12 @@ Create a docker secret in the above namespace
 > kubectl create secret docker-registry regsecret --docker-username=[user] --docker-password=[password] --docker-email=[email] [--namespace dbnamespace]
 
 To install this helm chart, clone or download the repository
-> git clone https://github.com/paolobellardone/oracledb-on-k8s.git
+> git clone <https://github.com/paolobellardone/oracledb-on-k8s.git>
 
 then customize the *values.yaml* to setup the required variables and run the following command
 > helm install --name [release name] oracledb [--namespace dbnamespace]
 
-The command will print out all the information needed to access your new Oracle Database instance on K8S.  
+The command will print out all the information needed to access your new Oracle Database instance on K8S.
 The Oracle Database instance will be available after a little while because at first run the database needs to be created and instantiated.
 
 ##### Values.yaml editable defaults, please change according to your needs
