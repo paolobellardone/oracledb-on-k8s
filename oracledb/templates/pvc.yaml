@@ -11,7 +11,7 @@ spec:
   storageClassName: "{{ .Values.pvc.storageClassName }}"
   selector:
     matchLabels:
-      oci-availability-domain: "{{ .Values.pvc.ociAD }}"
+      topology.kubernetes.io/zone: "{{ .Values.pvc.ociAD }}"
   accessModes:
     - {{ .Values.pvc.accessModes }}
   resources:

@@ -9,7 +9,7 @@ pvc:
   #If not specified will default to oci
   storageClassName: "oci"
   #Check the availability domain on your OCI tenant
-  ociAD: "US-ASHBURN-AD-2"
+  ociAD: "EU-FRANKFURT-1-AD-2"
   accessModes: ReadWriteOnce
   #Minimum size on OCI is 50Gi, if set smaller the deployment will fail
   storageSize: 50Gi
