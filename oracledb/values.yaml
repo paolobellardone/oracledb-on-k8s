@@ -18,6 +18,9 @@ service:
   #Type can be: ClusterIP, NodePort, LoadBalancer
   type: LoadBalancer
   port: 1521
+  targetPort: 1521
+  nodePort: 31521
+  portName: sqlnet
 
 replicaCount: 1
 

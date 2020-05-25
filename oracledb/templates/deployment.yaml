@@ -50,13 +50,23 @@ spec:
               name: dshm
             - mountPath: /ORCL #This is the directory inside the container
               name: database-storage
+          #readinessProbe:
+          #  exec:
+          #    command:
+          #    - /bin/bash
+          #    - -c
+          #    - "/opt/oracle/checkDBStatus.sh"
           env:
             - name: DB_SID
               value: {{ .Values.image.dbSid }}
             - name: DB_PDB
               value: {{ .Values.image.dbPdb }}
             - name: DB_PASSWD
-              value: {{ .Values.image.dbPassword }}
+              #value: {{ .Values.image.dbPassword }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "oracledb.name" . }}
+                  key: oracledb-system-password
             - name: DB_DOMAIN
               value: {{ .Values.image.dbDomain }}
             - name: DB_MEMORY
